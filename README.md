@@ -6,8 +6,8 @@ This repo is based on the [Steven Lu popular movies list](https://github.com/sjl
 
 Currently, this tool outputs 2 lists:
 
-* Certified Fresh in theaters ([feed](https://s3.amazonaws.com/moldy-pumpkins/fresh-movies-in-theaters.json)) ([RT](https://www.rottentomatoes.com/browse/cf-in-theaters/))
-* Certified Fresh dvd/streaming releases ([feed](https://s3.amazonaws.com/moldy-pumpkins/fresh-movies.json)) ([RT](https://www.rottentomatoes.com/browse/dvd-streaming-upcoming))
+* Certified Fresh in theaters ([feed](https://s3.amazonaws.com/moldy-pumpkins/fresh-movies-in-theaters.json)) ([RT](http://www.dereferer.org/?https%3A%2F%2Fwww%2Erottentomatoes%2Ecom%2Fbrowse%2Fcf%2Din%2Dtheaters%2F))
+* Certified Fresh dvd/streaming releases ([feed](https://s3.amazonaws.com/moldy-pumpkins/fresh-movies.json)) ([RT](http://www.dereferer.org/?https%3A%2F%2Fwww%2Erottentomatoes%2Ecom%2Fbrowse%2Fdvd%2Dstreaming%2Dupcoming))
 
 Since many indie movies go straight to streaming services, using both lists together should catch nearly all new Certified Fresh titles. If you're getting too many documentaries or low budget releases, try using the first list only.
 
