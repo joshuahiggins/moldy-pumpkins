@@ -1,0 +1,49 @@
+{
+  "name": "moldy-pumpkins",
+  "version": "0.1.0",
+  "description": "A library to help determine what movies to watch",
+  "main": "index.js",
+  "scripts": {
+    "lint": "./node_modules/eslint/bin/eslint.js -c .eslintrc.js ./*.js ./**/*.js",
+    "test": "NODE_ENV=test mocha $1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/joshuahiggins/moldy-pumpkins.git"
+  },
+  "keywords": [
+    "movies"
+  ],
+  "author": "Joshua Higgins <hello@joshuahiggins.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/joshuahiggins/moldy-pumpkins/issues"
+  },
+  "homepage": "https://github.com/joshuahiggins/moldy-pumpkins",
+  "dependencies": {
+    "aws-sdk": "^2.153.0",
+    "bluebird": "^2.9.27",
+    "cheerio": "^0.19.0",
+    "dotenv": "^1.1.0",
+    "eyes": "^0.1.8",
+    "fast-stats": "0.0.2",
+    "lodash": "^3.9.3",
+    "moment": "^2.10.3",
+    "redis": "^0.12.1",
+    "request": "^2.57.0",
+    "s3": "^4.4.0",
+    "temp-write": "^1.1.1",
+    "urijs": "^1.17.0",
+    "winston": "^1.0.0"
+  },
+  "devDependencies": {
+    "aws-sam-local": "^0.2.2",
+    "chai": "^3.0.0",
+    "eslint": "^4.9.0",
+    "eslint-config-airbnb": "16.1.0",
+    "eslint-plugin-import": "^2.7.0",
+    "eslint-plugin-jsx-a11y": "^6.0.2",
+    "eslint-plugin-react": "^7.4.0",
+    "mocha": "^2.2.5"
+  }
+}

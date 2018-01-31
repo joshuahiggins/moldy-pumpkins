@@ -1,0 +1,51 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Transform: AWS::Serverless-2016-10-31
+
+Description: Moldy Pumpkins movie list creator
+
+Parameters:
+  AwsBucket:
+    Type: String
+    Default: 'moldy-pumpkins'
+  TmdbKey:
+    Type: String
+  TmdbPosterUrl:
+    Type: String
+    Default: 'http://image.tmdb.org/t/p/w500'
+  TraktKey:
+    Type: String
+
+Resources:
+  MoldyBucket:
+    Type: AWS::S3::Bucket
+    Properties:
+      BucketName: !Ref AwsBucket
+      AccessControl: PublicRead
+  CertifiedFresh:
+    Type: AWS::Serverless::Function
+    Properties:
+      Runtime: nodejs6.10
+      Handler: index.handler
+      Timeout: 30
+      Policies:
+        - Version: "2012-10-17"
+          Statement:
+          - Effect: "Allow"
+            Action:
+              - "s3:GetObject"
+              - "s3:ListBucket"
+              - "s3:GetBucketLocation"
+              - "s3:GetObjectVersion"
+              - "s3:PutObject"
+              - "s3:PutObjectAcl"
+              - "s3:GetLifecycleConfiguration"
+              - "s3:PutLifecycleConfiguration"
+            Resource:
+              - !Sub 'arn:${AWS::Partition}:s3:::${AwsBucket}'
+              - !Sub 'arn:${AWS::Partition}:s3:::${AwsBucket}/*'
+      Environment:
+        Variables:
+          AWS_BUCKET: !Ref AwsBucket
+          TMDB_KEY: !Ref TmdbKey
+          TMDB_POSTER_URL: !Ref TmdbPosterUrl
+          TRAKT_KEY: !Ref TraktKey
