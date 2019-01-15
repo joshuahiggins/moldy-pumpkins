@@ -49,3 +49,14 @@ Resources:
           TMDB_KEY: !Ref TmdbKey
           TMDB_POSTER_URL: !Ref TmdbPosterUrl
           TRAKT_KEY: !Ref TraktKey
+      Events:
+        ExportFreshMoviesOnInterval:
+          Type: Schedule
+          Properties:
+            Schedule: rate(1 day)
+            Input: '{"exportToS3":true,"type":"dvd"}'
+        ExportFreshMoviesInTheatersOnInterval:
+          Type: Schedule
+          Properties:
+            Schedule: rate(1 day)
+            Input: '{"exportToS3":true,"type":"theater"}'
