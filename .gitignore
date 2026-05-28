@@ -1,6 +1,10 @@
 node_modules
+.claude
 .idea
 *.log
 .env
 .DS_Store
 output.yaml
+.aws-sam
+samconfig.toml
+dist
