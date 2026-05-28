@@ -1,49 +1,50 @@
 {
   "name": "moldy-pumpkins",
-  "version": "0.1.0",
-  "description": "A library to help determine what movies to watch",
-  "main": "index.js",
+  "version": "1.0.0",
+  "description": "Publishes curated movie & TV browse lists as JSON for Radarr/Sonarr import lists",
+  "type": "module",
+  "engines": {
+    "node": ">=22"
+  },
   "scripts": {
-    "lint": "./node_modules/eslint/bin/eslint.js -c .eslintrc.js ./*.js ./**/*.js",
-    "test": "NODE_ENV=test mocha $1"
+    "test": "node --import tsx --test \"test/*.test.ts\"",
+    "lint": "eslint .",
+    "typecheck": "tsc --noEmit",
+    "format": "prettier --write .",
+    "format:check": "prettier --check .",
+    "start": "node --import tsx src/local.ts",
+    "start:dry": "DRY_RUN=true npm start",
+    "deploy": "sam build && sam deploy",
+    "deploy:guided": "sam build && sam deploy --guided"
   },
   "repository": {
     "type": "git",
     "url": "https://github.com/joshuahiggins/moldy-pumpkins.git"
   },
   "keywords": [
-    "movies"
+    "movies",
+    "tv",
+    "radarr",
+    "sonarr",
+    "import-list"
   ],
   "author": "Joshua Higgins <hello@joshuahiggins.com>",
   "license": "MIT",
-  "bugs": {
-    "url": "https://github.com/joshuahiggins/moldy-pumpkins/issues"
-  },
-  "homepage": "https://github.com/joshuahiggins/moldy-pumpkins",
   "dependencies": {
-    "aws-sdk": "^2.153.0",
-    "bluebird": "^2.9.27",
-    "cheerio": "^0.19.0",
-    "dotenv": "^1.1.0",
-    "eyes": "^0.1.8",
-    "fast-stats": "0.0.2",
-    "lodash": "^3.9.3",
-    "moment": "^2.10.3",
-    "redis": "^0.12.1",
-    "request": "^2.57.0",
-    "s3": "^4.4.0",
-    "temp-write": "^1.1.1",
-    "urijs": "^1.17.0",
-    "winston": "^1.0.0"
+    "@aws-sdk/client-s3": "^3.600.0",
+    "cheerio": "^1.0.0",
+    "esbuild": "^0.24.0"
   },
   "devDependencies": {
-    "aws-sam-local": "^0.2.2",
-    "chai": "^3.0.0",
-    "eslint": "^4.9.0",
-    "eslint-config-airbnb": "16.1.0",
-    "eslint-plugin-import": "^2.7.0",
-    "eslint-plugin-jsx-a11y": "^6.0.2",
-    "eslint-plugin-react": "^7.4.0",
-    "mocha": "^2.2.5"
+    "@eslint/js": "^9.13.0",
+    "@types/node": "^22.8.0",
+    "dotenv": "^16.4.5",
+    "eslint": "^9.13.0",
+    "eslint-config-prettier": "^9.1.0",
+    "globals": "^15.11.0",
+    "prettier": "^3.3.3",
+    "tsx": "^4.19.1",
+    "typescript": "^5.6.3",
+    "typescript-eslint": "^8.11.0"
   }
 }

@@ -1,62 +1,96 @@
 AWSTemplateFormatVersion: '2010-09-09'
 Transform: AWS::Serverless-2016-10-31
 
-Description: Moldy Pumpkins movie list creator
+Description: Moldy Pumpkins - publishes curated movie & TV lists as JSON for Radarr/Sonarr
 
 Parameters:
-  AwsBucket:
+  BucketName:
     Type: String
-    Default: 'moldy-pumpkins'
+    Description: >-
+      Globally-unique S3 bucket name to create and publish the JSON lists to.
+      No default: S3 names share one global namespace, so each deployment must
+      supply its own.
+    AllowedPattern: '^[a-z0-9][a-z0-9.-]{1,61}[a-z0-9]$'
   TmdbKey:
     Type: String
+    NoEcho: true
   TmdbPosterUrl:
     Type: String
-    Default: 'http://image.tmdb.org/t/p/w500'
-  TraktKey:
+    Default: 'https://image.tmdb.org/t/p/w500'
+  TvdbKey:
     Type: String
+    NoEcho: true
+  TvdbPin:
+    Type: String
+    Default: ''
+    NoEcho: true
 
 Resources:
   MoldyBucket:
     Type: AWS::S3::Bucket
     Properties:
-      BucketName: !Ref AwsBucket
-      AccessControl: PublicRead
+      BucketName: !Ref BucketName
+      OwnershipControls:
+        Rules:
+          - ObjectOwnership: BucketOwnerEnforced
+      PublicAccessBlockConfiguration:
+        BlockPublicAcls: false
+        BlockPublicPolicy: false
+        IgnorePublicAcls: false
+        RestrictPublicBuckets: false
+
+  MoldyBucketPolicy:
+    Type: AWS::S3::BucketPolicy
+    Properties:
+      Bucket: !Ref MoldyBucket
+      PolicyDocument:
+        Version: '2012-10-17'
+        Statement:
+          - Sid: PublicReadGetObject
+            Effect: Allow
+            Principal: '*'
+            Action: 's3:GetObject'
+            Resource: !Sub 'arn:${AWS::Partition}:s3:::${BucketName}/*'
+
   CertifiedFresh:
     Type: AWS::Serverless::Function
+    Metadata:
+      BuildMethod: esbuild
+      BuildProperties:
+        EntryPoints:
+          - src/index.ts
+        External:
+          - '@aws-sdk/*'
+        Format: esm
+        Target: node22
+        Minify: false
+        Sourcemap: true
+        OutExtension:
+          - .js=.mjs
     Properties:
-      Runtime: nodejs6.10
+      CodeUri: .
+      Runtime: nodejs22.x
+      Architectures:
+        - arm64
       Handler: index.handler
-      Timeout: 30
+      Timeout: 120
+      MemorySize: 256
       Policies:
-        - Version: "2012-10-17"
+        - Version: '2012-10-17'
           Statement:
-          - Effect: "Allow"
-            Action:
-              - "s3:GetObject"
-              - "s3:ListBucket"
-              - "s3:GetBucketLocation"
-              - "s3:GetObjectVersion"
-              - "s3:PutObject"
-              - "s3:PutObjectAcl"
-              - "s3:GetLifecycleConfiguration"
-              - "s3:PutLifecycleConfiguration"
-            Resource:
-              - !Sub 'arn:${AWS::Partition}:s3:::${AwsBucket}'
-              - !Sub 'arn:${AWS::Partition}:s3:::${AwsBucket}/*'
+            - Effect: Allow
+              Action:
+                - 's3:PutObject'
+              Resource: !Sub 'arn:${AWS::Partition}:s3:::${BucketName}/*'
       Environment:
         Variables:
-          AWS_BUCKET: !Ref AwsBucket
+          S3_BUCKET: !Ref BucketName
           TMDB_KEY: !Ref TmdbKey
           TMDB_POSTER_URL: !Ref TmdbPosterUrl
-          TRAKT_KEY: !Ref TraktKey
+          TVDB_KEY: !Ref TvdbKey
+          TVDB_PIN: !Ref TvdbPin
       Events:
-        ExportFreshMoviesOnInterval:
+        Daily:
           Type: Schedule
           Properties:
             Schedule: rate(1 day)
-            Input: '{"exportToS3":true,"type":"dvd"}'
-        ExportFreshMoviesInTheatersOnInterval:
-          Type: Schedule
-          Properties:
-            Schedule: rate(1 day)
-            Input: '{"exportToS3":true,"type":"theater"}'
