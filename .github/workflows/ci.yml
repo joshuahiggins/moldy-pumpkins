@@ -19,3 +19,12 @@ jobs:
       - run: npm run typecheck
       - run: npm run format:check
       - run: npm test
+      - uses: aws-actions/setup-sam@v2
+        with:
+          use-installer: true
+      - run: sam build
+      # A green `sam build` does not guarantee a working artifact — esbuild's ESM
+      # output throws "Dynamic require ... is not supported" at load time for
+      # CommonJS deps. Importing the bundle catches that breakage before deploy.
+      - name: Smoke-test that the bundle loads
+        run: node --input-type=module -e "await import('./.aws-sam/build/CertifiedFresh/index.mjs')"

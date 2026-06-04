@@ -67,6 +67,11 @@ Resources:
         Sourcemap: true
         OutExtension:
           - .js=.mjs
+        Banner:
+          # cheerio's transitive CommonJS deps (iconv-lite/safer-buffer) call
+          # require(); supply a real require() so esbuild's ESM stub resolves it
+          # instead of throwing "Dynamic require ... is not supported" at runtime.
+          - "js=import { createRequire } from 'module'; const require = createRequire(import.meta.url);"
     Properties:
       CodeUri: .
       Runtime: nodejs22.x
