@@ -1,6 +1,6 @@
 {
   "name": "moldy-pumpkins",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Publishes curated movie & TV browse lists as JSON for Radarr/Sonarr import lists",
   "type": "module",
   "engines": {
