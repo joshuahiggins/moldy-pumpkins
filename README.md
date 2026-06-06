@@ -15,11 +15,11 @@ and refreshed once per day.
 
 | List                                | App    | URL                                                                                         |
 | ----------------------------------- | ------ | ------------------------------------------------------------------------------------------- |
-| Movies: Certified Fresh in Theaters | Radarr | <https://moldy-pumpkins.s3.us-east-1.amazonaws.com/movies-certified-fresh-in-theaters.json> |
-| Movies: Certified Fresh at Home     | Radarr | <https://moldy-pumpkins.s3.us-east-1.amazonaws.com/movies-certified-fresh-at-home.json>     |
-| Movies: Most Popular Coming Soon    | Radarr | <https://moldy-pumpkins.s3.us-east-1.amazonaws.com/movies-most-popular-coming-soon.json>    |
-| TV: Certified Fresh Newest          | Sonarr | <https://moldy-pumpkins.s3.us-east-1.amazonaws.com/tv-certified-fresh-newest.json>          |
-| TV: Certified Fresh Most Popular    | Sonarr | <https://moldy-pumpkins.s3.us-east-1.amazonaws.com/tv-certified-fresh-most-popular.json>    |
+| [Movies: Certified Fresh in Theaters](https://www.rottentomatoes.com/browse/movies_in_theaters/critics:certified_fresh~sort:popular) | Radarr | <https://moldy-pumpkins.s3.us-east-1.amazonaws.com/movies-certified-fresh-in-theaters.json> |
+| [Movies: Certified Fresh at Home](https://www.rottentomatoes.com/browse/movies_at_home/critics:certified_fresh~sort:popular)     | Radarr | <https://moldy-pumpkins.s3.us-east-1.amazonaws.com/movies-certified-fresh-at-home.json>     |
+| [Movies: Most Popular Coming Soon](https://www.rottentomatoes.com/browse/movies_coming_soon/sort:popular)    | Radarr | <https://moldy-pumpkins.s3.us-east-1.amazonaws.com/movies-most-popular-coming-soon.json>    |
+| [TV: Certified Fresh Newest](https://www.rottentomatoes.com/browse/tv_series_browse/critics:fresh~sort:newest)          | Sonarr | <https://moldy-pumpkins.s3.us-east-1.amazonaws.com/tv-certified-fresh-newest.json>          |
+| [TV: Certified Fresh Most Popular](https://www.rottentomatoes.com/browse/tv_series_browse/critics:fresh~sort:popular)    | Sonarr | <https://moldy-pumpkins.s3.us-east-1.amazonaws.com/tv-certified-fresh-most-popular.json>    |
 
 ### Add a movie list to Radarr
 
